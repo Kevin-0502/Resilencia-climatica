@@ -1,0 +1,23 @@
+.udb{
+    color: rgb(213, 213, 213);
+    font-weight: bold;
+    font-size: xx-large;
+    margin: 0;
+}
+
+.navi{
+    margin:0;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: large;
+    margin-left: 1.5%;
+    padding-left: 1%;
+    padding-right: 1%;
+    color: rgb(213, 213, 213);
+}   
+
+.navi:hover {
+    background-color: rgb(213, 213, 213);
+    color: rgb(33, 37, 41 );
+    border-radius:.4rem;
+}
