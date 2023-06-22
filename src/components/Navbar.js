@@ -25,9 +25,9 @@ function TopBar() {
             <NavbarToggler onClick={toggleNavbar} className="me-1" style={{backgroundColor:'#D5D5D5'}}/>
             <Collapse isOpen={!collapsed} navbar>
             <Nav navbar >
-                <NavItem><Link to="/" className='navi'>-Home</Link></NavItem>
-                <NavItem><Link to="/blogs" className='navi'>-Charts</Link></NavItem>
-                <NavItem><Link to="/contact" className='navi'>-Contact</Link></NavItem>
+                <NavItem><Link to="/" className='navi'>Home</Link></NavItem>
+                <NavItem><Link to="/charts" className='navi'>Charts</Link></NavItem>
+                <NavItem><Link to="/contact" className='navi'>Contact</Link></NavItem>
             </Nav>
             </Collapse>
         </Navbar>

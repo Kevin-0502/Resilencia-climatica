@@ -7,7 +7,7 @@ const Layout = (args) => {
     return (
     <>
     <TopBar/>
-    <Outlet style={{}}/>
+    <Outlet/>
     </>
     )
 };

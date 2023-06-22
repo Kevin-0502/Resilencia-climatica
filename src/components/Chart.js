@@ -8,12 +8,14 @@ import {
     Tooltip,
     Legend
 } from "recharts";
+import { Table } from 'reactstrap';
 
 
 const Chart = () => {
     return (
         <div>
-            <h1>Chart</h1>
+            <h1 className='d-flex justify-content-center'>Chart</h1>
+            <div className='d-flex justify-content-center'>
             <LineChart
             width={750}
             height={400}
@@ -38,6 +40,41 @@ const Chart = () => {
             />
             <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
             </LineChart>
+            </div>
+            <Table hover>
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            UV
+                        </th>
+                        <th>
+                            PV
+                        </th>
+                        <th>
+                            AMT
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        data.map((item, index) => (
+                            <tr key={index}>
+                                <th scope="row">{index + 1}</th>
+                                <td>{item.name}</td>
+                                <td>{item.uv}</td>
+                                <td>{item.pv}</td>
+                                <td>{item.amt}</td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+                </Table>
         </div>
     );
 };
