@@ -1,36 +1,59 @@
 import React, { useState } from 'react';
 import './Navbar.css'
 import {
-    Collapse,
     Navbar,
-    NavbarToggler,
     NavbarBrand,
-    Nav,
     NavItem,
-    NavLink,
+    Nav,
+    Collapse,
+    NavbarToggler,
+    NavLink
 } from 'reactstrap';
-import { Link } from "react-router-dom";
+import udb from '../UDB.png'
+import ieee from '../IEEE.png'
 
 function TopBar() {
 
-    const [collapsed, setCollapsed] = useState(true);
-    const toggleNavbar = () => setCollapsed(!collapsed);
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
-    <div>
-        <Navbar 
-        color='dark'
-        >
-            <NavbarBrand href="/" className="me-auto"><p className='udb'>UDB</p></NavbarBrand>
-            <NavbarToggler onClick={toggleNavbar} className="me-1" style={{backgroundColor:'#D5D5D5'}}/>
-            <Collapse isOpen={!collapsed} navbar>
-            <Nav navbar >
-                <NavItem><Link to="/" className='navi'>Home</Link></NavItem>
-                <NavItem><Link to="/charts" className='navi'>Charts</Link></NavItem>
-                <NavItem><Link to="/contact" className='navi'>Contact</Link></NavItem>
-            </Nav>
-            </Collapse>
-        </Navbar>
+    <div >
+        <Navbar color="dark" dark expand="md">
+                <NavbarBrand href="#">
+                <img
+                    alt='UDB'
+                    src={udb}
+                    style={{
+                    height: 70,
+                    width: 70
+                    }}
+                />
+                </NavbarBrand>
+                <NavbarBrand href="#">
+                <img
+                    alt='IEEE'
+                    src={ieee}
+                    style={{
+                    height: 70,
+                    width: 120
+                    }}
+                />
+                </NavbarBrand>
+                <NavbarToggler onClick={() => { setIsOpen(!isOpen) }} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav className="mr-auto" navbar>
+                        <NavItem className='navi'>
+                            <NavLink href="/">Home</NavLink>
+                        </NavItem>
+                        <NavItem className='navi'>
+                            <NavLink href="/charts">Charts</NavLink>
+                        </NavItem>
+                        <NavItem className='navi'>
+                            <NavLink href="/contact">Contact</NavLink>
+                        </NavItem>
+                    </Nav>
+                </Collapse>
+            </Navbar>
     </div>
     );
 }
