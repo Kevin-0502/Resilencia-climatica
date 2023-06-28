@@ -1,7 +1,16 @@
 import { Table } from "reactstrap";
+import { useState,useEffect } from "react";
 
 
 const Contact = () => {
+
+    const [data,setData]=useState([]);
+
+    var url='https://example-api-messages.onrender.com/api/list'
+    useEffect(()=>{
+        fetch(url).then(response=>response.json()).then(resjson=>setData(resjson))
+    },[])
+
     return (
         <div>  
             <h1>Contact Me</h1>
@@ -67,6 +76,15 @@ const Contact = () => {
                     </tr>
                 </tbody>
                 </Table>
+                {
+                    data.map((item,index)=>(
+                        <>
+                        <p>{item.content}</p>
+                        <p>{item.user}</p>
+                        </>
+                        
+                    ))
+                }
         </div>
     );
 };
