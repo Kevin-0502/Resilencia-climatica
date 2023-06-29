@@ -23,7 +23,7 @@ const client = new MongoClient(uri);
 async function run() {
     try {
         const database = client.db('sample');
-        const movies = database.collection('messages');
+        const data = database.collection('data');
         } finally {
             await client.close();
         }

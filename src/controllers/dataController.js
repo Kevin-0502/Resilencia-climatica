@@ -1,10 +1,10 @@
-const Message = require('../models/message');
+const Data = require('../models/data');
 
 //list all items
 exports.list = async(req, res) =>{
     try{
-    const message = await Message.find({});
-    res.json(message);
+    const data = await Data.find({});
+    res.json(data);
     }catch(error){
         console.log(error);
         res.send(error);
@@ -14,11 +14,11 @@ exports.list = async(req, res) =>{
 
 exports.show = async(req, res, next) =>{
     try{
-        const message = await Message.findOne({id: req.params.id});
-        if(!message){
-            res.status(404).json({message: "Message not finded"});
+        const data = await Data.findOne({id: req.params.id});
+        if(!data){
+            res.status(404).json({message: "Message not found"});
         }
-        res.json(message);
+        res.json(data);
 
     }catch(error){
         console.log(error);
@@ -28,11 +28,11 @@ exports.show = async(req, res, next) =>{
 };
 
 exports.add = async(req, res) =>{
-    const message = new Message(req.body);
+    const data = new Data(req.body);
 
     try{
-        await message.save();
-        res.json({message: "Added new message"});
+        await data.save();
+        res.json({message: "Added new message",data:data});
         }catch(error){
             console.log(error);
             res.send(error);
@@ -42,10 +42,10 @@ exports.add = async(req, res) =>{
 
 exports.update = async (req, res, next) =>{
     try{
-        const message = await Message.findOneAndUpdate(
+        const data = await Data.findOneAndUpdate(
             {id: req.params.id},req.body
         );
-        res.json({message: "Updated message"});
+        res.json({message: "Updated message",data:data});
 
     }catch(error){
         console.log(error);
@@ -57,8 +57,8 @@ exports.update = async (req, res, next) =>{
 
 exports.delete = async (req, res, next) =>{
     try{
-        const message = await Message.findOneAndDelete({id: req.params.id});
-        res.json({message: "Deleted message"});
+        const data = await Data.findOneAndDelete({id: req.params.id});
+        res.json({message: "Deleted message",data:data});
 
     }catch(error){
         console.log(error);
