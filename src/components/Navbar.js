@@ -10,7 +10,7 @@ import {
     NavLink
 } from 'reactstrap';
 import udb from '../UDB.png'
-import ieee from '../IEEE.png'
+import iiie from '../IIIE.png'
 
 function TopBar() {
 
@@ -24,18 +24,18 @@ function TopBar() {
                     alt='UDB'
                     src={udb}
                     style={{
-                    height: 70,
-                    width: 70
+                    height: 80,
+                    width: 80
                     }}
                 />
                 </NavbarBrand>
                 <NavbarBrand href="#">
                 <img
-                    alt='IEEE'
-                    src={ieee}
+                    alt='IIIE'
+                    src={iiie}
                     style={{
                     height: 70,
-                    width: 120
+                    width: 70
                     }}
                 />
                 </NavbarBrand>
