@@ -1,92 +1,69 @@
-import { Table } from "reactstrap";
-import { useState,useEffect } from "react";
+import React from 'react';
+import img from "../assests/img/profile.png";
+import {
+    Card,
+    Table,
+    TableHead,
+    TableRow,
+    TableHeaderCell,
+    TableBody,
+    TableCell,
+    Text,
+    Title,
+    Flex
+  } from "@tremor/react";
 
+  const data = [
+{
+position: "1",
+fisrtName: "Kevin",
+lastName: "Huezo",
+UserName: "Alberto"
+}
+  ];
 
 const Contact = () => {
-
-    const [data,setData]=useState([]);
-
-    var url='https://example-api-messages.onrender.com/api/list'
-    useEffect(()=>{
-        fetch(url).then(response=>response.json()).then(resjson=>setData(resjson))
-    },[])
-
-    return (
-        <div>  
-            <h1>Contact Me</h1>
-            <Table hover>
-                <thead>
-                    <tr>
-                    <th>
-                        #
-                    </th>
-                    <th>
-                        First Name
-                    </th>
-                    <th>
-                        Last Name
-                    </th>
-                    <th>
-                        Username
-                    </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <th scope="row">
-                        1
-                    </th>
-                    <td>
-                        Mark
-                    </td>
-                    <td>
-                        Otto
-                    </td>
-                    <td>
-                        @mdo
-                    </td>
-                    </tr>
-                    <tr>
-                    <th scope="row">
-                        2
-                    </th>
-                    <td>
-                        Jacob
-                    </td>
-                    <td>
-                        Thornton
-                    </td>
-                    <td>
-                        @fat
-                    </td>
-                    </tr>
-                    <tr>
-                    <th scope="row">
-                        3
-                    </th>
-                    <td>
-                        Larry
-                    </td>
-                    <td>
-                        the Bird
-                    </td>
-                    <td>
-                        @twitter
-                    </td>
-                    </tr>
-                </tbody>
-                </Table>
-                {
-                    data.map((item,index)=>(
-                        <>
-                        <p>{item.content}</p>
-                        <p>{item.user}</p>
-                        </>
-                        
-                    ))
-                }
-        </div>
+    return(
+        <Card decoration="top" decorationColor="purple">
+        <Flex>
+        <Title>Contactame!</Title>
+        <img 
+        alt="User"
+        src={img}
+        style={{
+            height: 60,
+            widows: 60
+        }}
+        />
+        </Flex>
+        <Table className="mt-5">
+          <TableHead>
+            <TableRow>
+              <TableHeaderCell>#</TableHeaderCell>
+              <TableHeaderCell>Primer Nombre</TableHeaderCell>
+              <TableHeaderCell>Apellido</TableHeaderCell>
+              <TableHeaderCell>UserName</TableHeaderCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((item) => (
+              <TableRow key={item.name}>
+                <TableCell>{item.position}</TableCell>
+                <TableCell>
+                  <Text>{item.fisrtName}</Text>
+                </TableCell>
+                <TableCell>
+                  <Text>{item.lastName}</Text>
+                </TableCell>
+                <TableCell>
+                  <Text>{item.UserName}</Text>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Card>
     );
-};
+}
 
-export default Contact;
+export default Contact
