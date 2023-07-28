@@ -51,8 +51,8 @@ const CardBase = () =>{
           <Badge icon={StatusOnlineIcon}>LIVE</Badge>
       </Flex>
       <Flex className="mt-6">
-          <Text color="black">Medidor de temperatura (°C)</Text>
-          <Text color="black">{item.temperatura}°C</Text>
+          <Text>Medidor de temperatura (°C)</Text>
+          <Text>{item.temperatura}°C</Text>
       </Flex>
       <CategoryBar 
       values={[20, 10, 70]}
@@ -61,8 +61,8 @@ const CardBase = () =>{
     className="mt-3"
       />
        <Flex className="mt-6">
-          <Text color="black">Medidor de temperatura (°F)</Text>
-          <Text color="black">{temperaturaFahrenheit}°F</Text>
+          <Text >Medidor de temperatura (°F)</Text>
+          <Text >{temperaturaFahrenheit}°F</Text>
       </Flex>
       <CategoryBar 
       values={[68, 18, 14]}
@@ -103,8 +103,8 @@ colors={["blue", "orange", "red"]}
     <Badge icon={StatusOnlineIcon}>LIVE</Badge>
 </Flex>
 <Flex className="mt-6">
-                <Text color="black" className="mt-6">Medidor de humedad</Text>
-                <Text color="black" className="mt-6">{element.humedad_relativa}%</Text>
+                <Text className="mt-6">Medidor de humedad</Text>
+                <Text className="mt-6">{element.humedad_relativa}%</Text>
 </Flex>
 <ProgressBar value={element.humedad_relativa} color="blue" className="mt-3" />
             <Legend 
@@ -192,7 +192,6 @@ style={{
     </Card>
 ))
         }
-       
       </Grid>
     )
 }

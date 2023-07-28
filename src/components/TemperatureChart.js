@@ -1,20 +1,41 @@
-import React, {useEffect} from "react";
+import React, {useEffect,useState} from "react";
 import { Card, Title, AreaChart, TabGroup, TabList, Tab, TabPanels, TabPanel, Flex } from "@tremor/react"
-import TemperatureChartData from "./TemperatureChartData";
+
 import img_temp from "../assests/img/thermometer.png";
 
 const dataFormatterTemperatureC= (number) => `${Intl.NumberFormat("us").format(number).toString()}°C`
 const dataFormatterTemperatureF= (number) => `${Intl.NumberFormat("us").format(number).toString()}°F`
 
+
+
+function Fahrenheit (celsius) {
+  const temperaturaFahrenheit = [];
+  celsius.forEach((item,i) => 
+  {
+    temperaturaFahrenheit.push(
+      {
+        temperatura:((item.temperatura * 1.8) + 32).toFixed(2),
+        updatedAt:item.updatedAt
+      }
+    )
+  });
+  return temperaturaFahrenheit;
+}
+
+
 const TemperatureChart = () => {
 
-     {/*Funcion que ayuda a convertir Celsius-Fahrenheit */}
- useEffect(() => {
-    TemperatureChartData.forEach((item) => {
-      const celsius = parseFloat(item["temperatura"]);
-      const fahrenheit = ((celsius * 1.8) + 32).toFixed(2);
-      item["temperaturaF"] = fahrenheit;
-    });
+  const [overallchartdata,setOverallchartdata]=useState([])
+  
+  
+
+
+
+    var url_data='http://localhost:3000/api/list'
+    useEffect(() => {
+      fetch(url_data).then(response=>response.json()).then(resjson=>setOverallchartdata(resjson))
+      Fahrenheit(overallchartdata)
+      //setTemperaturaFahrenheit(overallchartdata)
   }, []);
 
   return(
@@ -41,8 +62,8 @@ const TemperatureChart = () => {
       
     <AreaChart
       className="h-72 mt-4"
-      data={TemperatureChartData}
-      index="day"
+      data={overallchartdata}
+      index="updatedAt"
       categories={["temperatura"]}
       colors={["red"]}
       valueFormatter={dataFormatterTemperatureC}
@@ -61,12 +82,11 @@ const TemperatureChart = () => {
           }}
           />
           </Flex>
-   
         <AreaChart
       className="h-72 mt-4"
-      data={TemperatureChartData}
-      index="day"
-      categories={["temperaturaF"]}
+      data={Fahrenheit(overallchartdata)}
+      index="updatedAt"
+      categories={["temperatura"]}
       colors={["orange"]}
       valueFormatter={dataFormatterTemperatureF}
     />
