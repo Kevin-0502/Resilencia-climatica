@@ -28,7 +28,7 @@ const TemperatureChart = () => {
 
   const [TemperatureChartData,setTemperatureChartData]=useState([])
 
-  var url_data='http://localhost:3000/api/list';
+  const url_data='http://localhost:3000/api/list';
 
 useEffect(() => {
   fetch(url_data)

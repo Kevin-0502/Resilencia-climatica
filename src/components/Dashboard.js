@@ -1,5 +1,5 @@
 import { TabGroup, TabList, Tab, TabPanel, TabPanels, Flex } from "@tremor/react";
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import OverallChart from "./OverallChart";
 import logo from "../logo_UDB.png";
 import logo_IIIE from "../IIIE.png";
@@ -12,11 +12,12 @@ const Dasboard = () => {
 const [selectedView, setSelectedView] = useState(1)
 
     return(
-<main className="bg-slate-200 p-6 sm-:p-10">
+<main className="bg-slate-200 p-6 sm-:p-10" 
+    style={{backgroundColor:'#000',minHeight:'100vh'}}>
     
 
     <TabGroup>
-        <TabList defaultValue={selectedView} handleSelect={ value => setSelectedView(value)} style={{ backgroundColor: '#545454'}}>
+        <TabList defaultValue={selectedView} handleSelect={ value => setSelectedView(value)} style={{ backgroundColor: '#545454',paddingLeft:10,paddingRight:10,borderRadius:10}}>
             <Flex alignItems="center" justifyContent="start">
             <Tab value={1} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 15 }}>Home</Tab>
             <Tab value={2} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 15 }}>Gráficas</Tab>

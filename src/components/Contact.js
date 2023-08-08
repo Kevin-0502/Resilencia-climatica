@@ -14,12 +14,17 @@ import {
   } from "@tremor/react";
 
   const data = [
-{
-position: "1",
-fisrtName: "Kevin",
-lastName: "Huezo",
-UserName: "Alberto"
-}
+    {
+      position: "1",
+      fisrtName: "Kevin",
+      lastName: "Jiménez",
+      email: "kmjh140217@gmail.com"
+      },{
+        position: "2",
+        fisrtName: "Oscar",
+        lastName: "Alas",
+        email: "oa3973392@gmail.com"
+        },
   ];
 
 const Contact = () => {
@@ -42,7 +47,7 @@ const Contact = () => {
               <TableHeaderCell>#</TableHeaderCell>
               <TableHeaderCell>Primer Nombre</TableHeaderCell>
               <TableHeaderCell>Apellido</TableHeaderCell>
-              <TableHeaderCell>UserName</TableHeaderCell>
+              <TableHeaderCell>Email</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -56,7 +61,7 @@ const Contact = () => {
                   <Text>{item.lastName}</Text>
                 </TableCell>
                 <TableCell>
-                  <Text>{item.UserName}</Text>
+                  <Text>{item.email}</Text>
                 </TableCell>
               </TableRow>
             ))}
