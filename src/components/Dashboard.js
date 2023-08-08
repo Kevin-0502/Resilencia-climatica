@@ -1,5 +1,5 @@
 import { TabGroup, TabList, Tab, TabPanel, TabPanels, Flex } from "@tremor/react";
-import React, { useState,useRef } from "react";
+import React, { useState } from "react";
 import OverallChart from "./OverallChart";
 import logo from "../logo_UDB.png";
 import logo_IIIE from "../IIIE.png";

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Col, Card, Text, Metric } from "@tremor/react";
+import { Grid, Col } from "@tremor/react";
 import TemperatureChart from "./TemperatureChart";
 import HumidityChart from "./HumidityChart";
 import CO2Chart from "./CO2Chart";
