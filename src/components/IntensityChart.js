@@ -3,6 +3,7 @@ import { Card, Title, Flex } from "@tremor/react";
 import { Col } from 'reactstrap';
 import img_light from "../assests/img/light-bulb.png";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import url_data from "./Data"
 
 const dataFormatterluminosidad = (number) => `${Intl.NumberFormat("us").format(number).toString()} LUX`
 
@@ -11,7 +12,6 @@ const IntensityChart = () => {
   
   const [IntensityChartData,setIntensityChartData]=useState([])
 
-  const url_data='http://localhost:3000/api/list';
 
   useEffect(() => {
     fetch(url_data).then(response=>response.json()).then(resjson=>setIntensityChartData(resjson))

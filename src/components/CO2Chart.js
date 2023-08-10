@@ -11,6 +11,7 @@ import {
   Legend,
   ResponsiveContainer
 } from "recharts";
+import url_data from "./Data"
 
 const dataFormatterCO2 = (number) => `${Intl.NumberFormat("us").format(number).toString()}PPM`
 
@@ -18,7 +19,6 @@ const CO2Chart = () => {
 
   const [CO2ChartData,setCO2ChartData]=useState([])
 
-  const url_data = 'http://localhost:3000/api/list';
   useEffect(()=>{
     fetch(url_data).then(response=>response.json()).then(resjson=>setCO2ChartData(resjson))
     

@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
   Legend
 } from "recharts";
+import url_data from "./Data"
 
 const dataFormatterTemperatureC= (number) => `${Intl.NumberFormat("us").format(number).toString()}°C`
 const dataFormatterTemperatureF= (number) => `${Intl.NumberFormat("us").format(number).toString()}°F`
@@ -28,7 +29,6 @@ const TemperatureChart = () => {
 
   const [TemperatureChartData,setTemperatureChartData]=useState([])
 
-  const url_data='http://localhost:3000/api/list';
 
 useEffect(() => {
   fetch(url_data)

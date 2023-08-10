@@ -11,6 +11,7 @@ import {
   Legend,
   ResponsiveContainer
 } from "recharts";
+import url_data from "./Data"
 
 const dataFormatterHumidity = (number) => `${Intl.NumberFormat("us").format(number).toString()}%`;
 
@@ -18,7 +19,6 @@ const HumidityChart = () => {
 
   const [HumidityChartData,setHumidityChartData]=useState([])
 
-  const url_data = 'http://localhost:3000/api/list';
   useEffect(()=>{
     fetch(url_data).then(response=>response.json()).then(resjson=>setHumidityChartData(resjson))
     

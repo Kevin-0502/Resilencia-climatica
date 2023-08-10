@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Card, Title, Flex } from "@tremor/react";
 import img_voc from "../assests/img/planet-earth.png";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import url_data from "./Data"
 
 const dataFormatterVOC = (number) => `${Intl.NumberFormat("us").format(number).toString()}mg/m3`;
 
@@ -9,7 +10,6 @@ const VOCChart = () => {
 
   const [VOCChartData,setVOCChartData]=useState([])
 
-  const url_data = 'http://localhost:3000/api/list';
   
   useEffect(()=>{
     fetch(url_data).then(response=>response.json()).then(resjson=>setVOCChartData(resjson))

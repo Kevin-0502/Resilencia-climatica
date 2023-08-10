@@ -8,7 +8,8 @@ import ligh_bulb from "../assests/img/light-bulb.png";
 import {
     StatusOnlineIcon
   } from "@heroicons/react/outline";
- 
+import url_data from "./Data"
+
 const CardBase = () =>{
 
     const [temperature, setTemperature] = useState(null);
@@ -18,7 +19,6 @@ const CardBase = () =>{
     const [VOC, setVOC] = useState(null);
     const [Intensity, setIntensity] = useState(null);
   
-    const url_data='http://localhost:3000/api/list';
   //temperature
     useEffect(() => {
       fetch(url_data)

@@ -1,6 +1,7 @@
 import React, {useEffect,useState} from 'react'
 import { Card, Title, Subtitle } from "@tremor/react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import url_data from "./Data"
 
 //funcion para regresar el ultimo objeto del array
 function last_data (data) {
@@ -12,7 +13,6 @@ const Chart = () => {
 
   const [overallchartdata,setOverallchartdata]=useState([])
 
-  const url_data = 'http://localhost:3000/api/list';
   useEffect(()=>{
     fetch(url_data).then(response=>response.json()).then(resjson=>setOverallchartdata(resjson))
     
