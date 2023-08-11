@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Card, Title, TabGroup, TabList, Tab, TabPanels, TabPanel, Flex } from "@tremor/react"
+import { Card, Title, TabGroup, TabList, Tab, TabPanels, TabPanel, Flex,Badge } from "@tremor/react"
 import img_temp from "../assests/img/thermometer.png";
 import {
   AreaChart,
@@ -11,50 +11,61 @@ import {
   ResponsiveContainer,
   Legend
 } from "recharts";
+import {
+  StatusOnlineIcon
+} from "@heroicons/react/outline";
 import url_data from "./Data"
 
 const dataFormatterTemperatureC= (number) => `${Intl.NumberFormat("us").format(number).toString()}°C`
 const dataFormatterTemperatureF= (number) => `${Intl.NumberFormat("us").format(number).toString()}°F`
 
-
 //funcion para convertir grados celsius a fahrenheit
 const convertCelsiusToFahrenheit = (celsius) => {
   return ((celsius * 1.8) + 32).toFixed(2);
-
-
 }
-
 
 const TemperatureChart = () => {
 
-  const [TemperatureChartData,setTemperatureChartData]=useState([])
+const [overallchartdata,setOverallchartdata]=useState([])
+
+/*
+function addFahrenheit(data) {
+  const dataWithFahrenheit = data.map(item => ({
+    ...item, //creando nuevo objeto con datos originales 
+    temperaturaF: convertCelsiusToFahrenheit(item.temperatura), //se incluye una nueva propiedad "temperaturaF"
+  }));
+  setOverallchartdataF(dataWithFahrenheit);
+}
+*/
 
 
-useEffect(() => {
-  fetch(url_data)
-    .then(response => response.json())
-    .then(resjson => {
-      const dataWithFahrenheit = resjson.map(item => ({
-        ...item, //creando nuevo objeto con datos originales 
-        temperaturaF: convertCelsiusToFahrenheit(item.temperatura), //se incluye una nueva propiedad "temperaturaF"
-      }));
-      setTemperatureChartData(dataWithFahrenheit);
-    });
-}, []);
 
- // Encuentra los valores máximos y mínimos de temperatura°C en los datos 
- const temperatures = TemperatureChartData.map(data => parseInt(data.temperatura));
- const maxTemperature = Math.max(...temperatures);
- const minTemperature = Math.min(...temperatures);
 
-  // Encuentra los valores máximos y mínimos de temperatura°F en los datos 
-  const temperaturesF = TemperatureChartData.map(data => parseInt(data.temperaturaF));
-  const maxTemperatureF = Math.max(...temperaturesF);
-  const minTemperatureF = Math.min(...temperaturesF);
+function fetch_data(){
+  fetch(url_data).then(response=>response.json()).then(resjson=>setOverallchartdata(resjson))
+}
+
+useEffect(()=>{
+  fetch_data()
+},[]);
+
+  // Encuentra los valores máximos y mínimos de temperatura°C en los datos 
+ //const temperatures = TemperatureChartData.map(data => parseInt(data.temperatura));
+  const temperatures = overallchartdata.map(data => parseInt(data.temperatura))
+  const maxTemperature = Math.max(...temperatures)+10;
+  const minTemperature = 0;
+
+ // Encuentra los valores máximos y mínimos de temperatura°F en los datos 
+ //const temperaturesF = TemperatureChartData.map(data => parseInt(data.temperaturaF));
+  const temperaturesF = overallchartdata.map(data => parseInt(convertCelsiusToFahrenheit(data.temperatura)))
+  const maxTemperatureF = Math.max(...temperaturesF)+10;
+  const minTemperatureF = 0;
+
+
 
   return(
     <Card decoration="top" decorationColor="red">
-    <TabGroup>
+    <TabGroup /*onLoad={addFahrenheit(overallchartdata)}*/> 
         <TabList>
           <Tab style={{ fontWeight: 'bold', fontSize: 15 }}>temperatura (°C)</Tab>
           <Tab style={{ fontWeight: 'bold', fontSize: 15 }}>temperatura (°F)</Tab>
@@ -64,20 +75,21 @@ useEffect(() => {
         <TabPanel>
           <Flex>
           <Title className="mt-6">Gráfica temperatura registrada (°C)</Title>
-         <img 
-         alt="temperatura"
-         src={img_temp}
-         style={{
-          height: 60,
-          widows: 60
-         }}
-         />
+          <Badge icon={StatusOnlineIcon} onClick={fetch_data()}>LIVE</Badge>
+          <img 
+          alt="temperatura"
+          src={img_temp}
+          style={{
+            height: 60,
+            widows: 60
+          }}
+          />
           </Flex>
           <ResponsiveContainer className="mt-6" width="100%" height={300}>
           <AreaChart
       width={800}
       height={400}
-      data={TemperatureChartData}
+      data={overallchartdata}
       margin={{
         top: 10,
         right: 30,
@@ -108,12 +120,11 @@ useEffect(() => {
           }}
           />
           </Flex>
-   
           <ResponsiveContainer className="mt-6" width="100%" height={300}>
           <AreaChart
       width={800}
       height={400}
-      data={TemperatureChartData}
+      data={overallchartdata}
       margin={{
         top: 10,
         right: 30,
@@ -126,7 +137,7 @@ useEffect(() => {
       <YAxis domain={[minTemperatureF,maxTemperatureF]}/>
       <Tooltip />
       <Legend />
-      <Area type="monotone" dataKey="temperaturaF" stroke="#FF9B16" fill="#FF9B16" formatter={dataFormatterTemperatureF}/>
+      <Area type="monotone" dataKey={(data)=>parseFloat(convertCelsiusToFahrenheit(data.temperatura))} stroke="#FF9B16" fill="#FF9B16" formatter={dataFormatterTemperatureF}/>
     </AreaChart>
     </ResponsiveContainer>
         </TabPanel>

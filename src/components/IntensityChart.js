@@ -1,32 +1,38 @@
 import React, {useEffect, useState} from 'react'
-import { Card, Title, Flex } from "@tremor/react";
+import { Card, Title, Flex,Badge } from "@tremor/react";
 import { Col } from 'reactstrap';
 import img_light from "../assests/img/light-bulb.png";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import url_data from "./Data"
+import {
+  StatusOnlineIcon
+} from "@heroicons/react/outline";
 
 const dataFormatterluminosidad = (number) => `${Intl.NumberFormat("us").format(number).toString()} LUX`
 
 const IntensityChart = () => {
-
   
   const [IntensityChartData,setIntensityChartData]=useState([])
 
+  function fetch_data(){
+    fetch(url_data).then(response=>response.json()).then(resjson=>setIntensityChartData(resjson))
+  }
 
   useEffect(() => {
-    fetch(url_data).then(response=>response.json()).then(resjson=>setIntensityChartData(resjson))
+    fetch_data()
 }, []);
 
    // Encuentra los valores máximos y mínimos de intensidad en los datos 
-   const Intensity = IntensityChartData.map(data => parseInt(data.intensidad_luminosa));
-   const maxintensidad = Math.max(...Intensity);
-   const minintensidad = Math.min(...Intensity);
+    const Intensity = IntensityChartData.map(data => parseInt(data.intensidad_luminosa));
+    const maxintensidad = Math.max(...Intensity)+10;
+    const minintensidad = 0;
 
     return(
       <Col>
-         <Card className="max-w-lg" decoration="top" decorationColor="yellow">
+        <Card className="max-w-lg" decoration="top" decorationColor="yellow">
           <Flex>
           <Title>Gráfica intensidad luminosa (LUX)</Title>
+          <Badge icon={StatusOnlineIcon} onClick={fetch_data()}>LIVE</Badge>
           <img 
           alt="light"
           src={img_light}

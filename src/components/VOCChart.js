@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { Card, Title, Flex } from "@tremor/react";
+import { Card, Title, Flex,Badge } from "@tremor/react";
 import img_voc from "../assests/img/planet-earth.png";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import url_data from "./Data"
+import {
+  StatusOnlineIcon
+} from "@heroicons/react/outline";
 
 const dataFormatterVOC = (number) => `${Intl.NumberFormat("us").format(number).toString()}mg/m3`;
 
@@ -10,21 +13,24 @@ const VOCChart = () => {
 
   const [VOCChartData,setVOCChartData]=useState([])
 
-  
-  useEffect(()=>{
+  function fetch_data() {
     fetch(url_data).then(response=>response.json()).then(resjson=>setVOCChartData(resjson))
-    
+  }
+
+  useEffect(()=>{
+    fetch_data()
   },[]);
 
    // Encuentra los valores máximos y mínimos de VOC en los datos 
   const VOC = VOCChartData.map(data => parseInt(data.VOC));
-  const maxvoc = Math.max(...VOC);
-  const minvoc = Math.min(...VOC);
+  const maxvoc = Math.max(...VOC)+10;
+  const minvoc = 0;
 
   return(
   <Card decoration="top" decorationColor="emerald">
     <Flex>
     <Title>Gráfica VOC recolectado (mg/m3)</Title>
+    <Badge icon={StatusOnlineIcon} onClick={fetch_data()}>LIVE</Badge>
     <img 
       alt="planet"
       src={img_voc}

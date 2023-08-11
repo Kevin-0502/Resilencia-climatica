@@ -1,32 +1,35 @@
 import React, {useEffect,useState} from 'react'
-import { Card, Title, Subtitle } from "@tremor/react";
+import { Card, Title, Subtitle,Badge } from "@tremor/react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import url_data from "./Data"
-
-//funcion para regresar el ultimo objeto del array
-function last_data (data) {
-  return data[data.length - 1];
-}
-
+import {
+  StatusOnlineIcon
+} from "@heroicons/react/outline";
 
 const Chart = () => {
 
   const [overallchartdata,setOverallchartdata]=useState([])
 
+  function fetch_last_data(){
+    fetch(url_data).then(response=>response.json()).then(resjson=>setOverallchartdata(resjson[resjson.length-1]))
+  }
+
   useEffect(()=>{
-    fetch(url_data).then(response=>response.json()).then(resjson=>setOverallchartdata(resjson))
-    
+    fetch_last_data()
   },[]);
 
     return(
     <Card className="mt-6">
-        <Title style={{fontWeight: 'bold'}}>Gráfica general de variables capturadas (Actualmente)</Title>
+        <Title style={{fontWeight: 'bold'}}>
+          Gráfica general de variables capturadas (Actualmente)
+          <Badge style={{position: 'absolute', right: 30}} icon={StatusOnlineIcon} onClick={fetch_last_data()}>LIVE</Badge>
+        </Title>
         <Subtitle>A continuación se muestran los valores de las variables capturadas.</Subtitle>
         <ResponsiveContainer className="mt-6" width="100%" height={300}>
         <BarChart
           width={100}
           height={300}
-          data={[last_data(overallchartdata)]}
+          data={[(overallchartdata)]}
           margin={{
             top: 5,
             right: 30,
