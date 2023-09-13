@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import { Card, Title, Flex,Badge } from "@tremor/react";
 import img_co2 from "../assests/img/co2.png";
 import {
@@ -11,27 +11,16 @@ import {
   Legend,
   ResponsiveContainer
 } from "recharts";
-import url_data from "./Data"
 import {
   StatusOnlineIcon
 } from "@heroicons/react/outline";
 
 const dataFormatterCO2 = (number) => `${Intl.NumberFormat("us").format(number).toString()}PPM`
 
-const CO2Chart = () => {
-
-  const [CO2ChartData,setCO2ChartData]=useState([])
-
-  function fetch_data() {
-    fetch(url_data).then(response=>response.json()).then(resjson=>setCO2ChartData(resjson))
-  }
-
-  useEffect(()=>{
-    fetch_data()
-  },[]);
+const CO2Chart = ({data}) => {
 
    // Encuentra los valores máximos y mínimos de CO2 en los datos 
- const CO2 = CO2ChartData.map(data => parseInt(data.CO2));
+ const CO2 = data.map(data => parseInt(data.CO2));
  const maxco2 = Math.max(...CO2)+10;
  const minco2 = 0;
 
@@ -39,7 +28,7 @@ const CO2Chart = () => {
 <Card decoration="top" decorationColor="stone">
   <Flex>
   <Title>Gráfica CO2 registrado (PPM)</Title>
-    <Badge icon={StatusOnlineIcon} onClick={fetch_data()}>LIVE</Badge>
+    <Badge icon={StatusOnlineIcon}>LIVE</Badge>
     <img 
     alt="co2"
     src={img_co2}
@@ -53,7 +42,7 @@ const CO2Chart = () => {
   <LineChart
       width={500}
       height={300}
-      data={CO2ChartData}
+      data={data}
       margin={{
         top: 5,
         right: 10,

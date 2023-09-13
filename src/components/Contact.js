@@ -51,8 +51,8 @@ const Contact = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((item) => (
-              <TableRow key={item.name}>
+            {data.map((item,i) => (
+              <TableRow key={i}>
                 <TableCell>{item.position}</TableCell>
                 <TableCell>
                   <Text>{item.fisrtName}</Text>

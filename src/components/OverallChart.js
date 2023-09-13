@@ -6,23 +6,11 @@ import {
   StatusOnlineIcon
 } from "@heroicons/react/outline";
 
-const Chart = () => {
-
-  const [overallchartdata,setOverallchartdata]=useState([])
-
-  function fetch_last_data(){
-    fetch(url_data).then(response=>response.json()).then(resjson=>setOverallchartdata(resjson[resjson.length-1]))
-  }
-
-  useEffect(()=>{
-    fetch_last_data()
-  },[]);
-
+const Chart = ({overallchartdata}) => {
     return(
     <Card className="mt-6">
         <Title style={{fontWeight: 'bold'}}>
           Gráfica general de variables capturadas (Actualmente)
-          <Badge style={{position: 'absolute', right: 30}} icon={StatusOnlineIcon} onClick={fetch_last_data()}>LIVE</Badge>
         </Title>
         <Subtitle>A continuación se muestran los valores de las variables capturadas.</Subtitle>
         <ResponsiveContainer className="mt-6" width="100%" height={300}>

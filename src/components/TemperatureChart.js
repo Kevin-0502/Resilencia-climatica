@@ -24,40 +24,18 @@ const convertCelsiusToFahrenheit = (celsius) => {
   return ((celsius * 1.8) + 32).toFixed(2);
 }
 
-const TemperatureChart = () => {
+const TemperatureChart = ({data}) => {
 
-const [overallchartdata,setOverallchartdata]=useState([])
-
-/*
-function addFahrenheit(data) {
-  const dataWithFahrenheit = data.map(item => ({
-    ...item, //creando nuevo objeto con datos originales 
-    temperaturaF: convertCelsiusToFahrenheit(item.temperatura), //se incluye una nueva propiedad "temperaturaF"
-  }));
-  setOverallchartdataF(dataWithFahrenheit);
-}
-*/
-
-
-
-
-function fetch_data(){
-  fetch(url_data).then(response=>response.json()).then(resjson=>setOverallchartdata(resjson))
-}
-
-useEffect(()=>{
-  fetch_data()
-},[]);
 
   // Encuentra los valores máximos y mínimos de temperatura°C en los datos 
  //const temperatures = TemperatureChartData.map(data => parseInt(data.temperatura));
-  const temperatures = overallchartdata.map(data => parseInt(data.temperatura))
+  const temperatures = data.map(data => parseInt(data.temperatura))
   const maxTemperature = Math.max(...temperatures)+10;
   const minTemperature = 0;
 
  // Encuentra los valores máximos y mínimos de temperatura°F en los datos 
  //const temperaturesF = TemperatureChartData.map(data => parseInt(data.temperaturaF));
-  const temperaturesF = overallchartdata.map(data => parseInt(convertCelsiusToFahrenheit(data.temperatura)))
+  const temperaturesF = data.map(data => parseInt(convertCelsiusToFahrenheit(data.temperatura)))
   const maxTemperatureF = Math.max(...temperaturesF)+10;
   const minTemperatureF = 0;
 
@@ -75,7 +53,7 @@ useEffect(()=>{
         <TabPanel>
           <Flex>
           <Title className="mt-6">Gráfica temperatura registrada (°C)</Title>
-          <Badge icon={StatusOnlineIcon} onClick={fetch_data()}>LIVE</Badge>
+          <Badge icon={StatusOnlineIcon}>LIVE</Badge>
           <img 
           alt="temperatura"
           src={img_temp}
@@ -89,7 +67,7 @@ useEffect(()=>{
           <AreaChart
       width={800}
       height={400}
-      data={overallchartdata}
+      data={data}
       margin={{
         top: 10,
         right: 30,
@@ -124,7 +102,7 @@ useEffect(()=>{
           <AreaChart
       width={800}
       height={400}
-      data={overallchartdata}
+      data={data}
       margin={{
         top: 10,
         right: 30,

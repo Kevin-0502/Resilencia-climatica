@@ -14,17 +14,20 @@ function convertCelsiusToFahrenheit (celsius) {
   return ((celsius * 1.8) + 32).toFixed(2);
 }
 
-const CardBase = () =>{
+const CardBase = ({last_data}) =>{
 
-    const [last_data,setLast_data]=useState([])
+    /*const [last_data,setLast_data]=useState([])
     
     function fetch_last_data(){
-      fetch(url_data).then(response=>response.json()).then(resjson=>setLast_data(resjson[resjson.length-1]))
+      fetch(url_data).then(response=>response.json()).then(resjson=>{
+        setLast_data(resjson[resjson.length-1])
+        console.log(resjson[resjson.length-1])
+      })
     }
 
   useEffect(()=>{
     fetch_last_data()
-  },[]);
+  },[]);*/
 
     return(
         <Grid 
@@ -50,7 +53,7 @@ const CardBase = () =>{
                     />
                   </div>
                   <Metric>{last_data.temperatura}°C / {convertCelsiusToFahrenheit(last_data.temperatura)}°F</Metric>
-                  <Badge icon={StatusOnlineIcon} onClick={fetch_last_data()}>LIVE</Badge>
+                  <Badge icon={StatusOnlineIcon}>LIVE</Badge>
                 </Flex>
                 <Flex className="mt-6">
                   <Text>Medidor de temperatura (°C)</Text>

@@ -6,24 +6,24 @@ import CO2Chart from "./CO2Chart";
 import VOCChart from "./VOCChart";
 import IntensityChart from "./IntensityChart";
 
-const ChartsData = () => {
+const ChartsData = ({data}) => {
   
   return (
     <Grid numItems={1} numItemsSm={2} numItemsLg={3} className="gap-2">
 
         {/*Card temperatura */}
     <Col numColSpan={1} numColSpanLg={2}>
-     <TemperatureChart /> {/*componente graficas temperaturas */}
+     <TemperatureChart data={data}/> {/*componente graficas temperaturas */}
     </Col>
 
     {/*Card humedad */}
-    <HumidityChart /> 
-  {/*Card CO2*/}
+    <HumidityChart data={data}/> 
+    {/*Card CO2*/}
     <Col>
-      <CO2Chart />
+      <CO2Chart data={data}/>
     </Col>
-    <VOCChart />
-    <IntensityChart />
+    <VOCChart data={data}/>
+    <IntensityChart data={data}/>
   </Grid>
   )
 }
