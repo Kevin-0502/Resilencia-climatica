@@ -13,7 +13,8 @@ const port = process.env.PORT || 3001;
 app.set('json spaces', 2);
 
 //mongodb connect
-const uri = "mongodb+srv://dbUser:dbUser@cluster0.juemb4w.mongodb.net/?retryWrites=true&w=majority";
+//const uri = "mongodb+srv://dbUser:dbUser@cluster0.juemb4w.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb://root:root@localhost:27017/?authMechanism=DEFAULT";
 
 mongoose.Promise = global.Promise;
 mongoose.connect(uri).then(db => console.log('conexion exitosa')).catch(err => console.log('error: ', err));
