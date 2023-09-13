@@ -14,3 +14,4 @@
         - ./data/log:/var/log/mongodb/
       ports:
         - "27017:27017"
+        
