@@ -12,18 +12,26 @@ import url_data from "./Data";
 const Dasboard = () => {
 
     const [selectedView, setSelectedView] = useState(1)
-    const [overallchartdata, setOverallchartdata] = useState([])
+    const [lastdata, setLastdata] = useState([])
     const [data, setData] = useState([])
     const [dataInitial, setDataInitial] = useState(false);
+    const [dataInitialLast, setDataInitialLast] = useState(false);
     var timerselected = 300000
 
     async function fetch_last_data() {
-        await fetch(url_data).then(response => response.json()).then(resjson => setOverallchartdata(resjson[resjson.length - 1]));
+        await fetch(url_data).then(response => response.json()).then(resjson => {
+            if(resjson.length>0){
+                setLastdata(resjson[resjson.length - 1])
+                setDataInitialLast(true)
+            }    
+            });
     }
     async function fetch_data() {
         fetch(url_data).then(response => response.json()).then(resjson => {
-            setData(resjson);
-            setDataInitial(true);
+            if(resjson.length>0){
+                setData(resjson)
+                setDataInitial(true)
+            }
         });
     };
 
@@ -68,13 +76,16 @@ const Dasboard = () => {
                 <TabPanels>
                     <TabPanel> {/*Pestaña 1*/}
                         {
-                            dataInitial ?
+                            dataInitialLast ?
                                 <>
-                                    <CardBase last_data={overallchartdata} /> {/*Componente CardBase */}
-                                    <OverallChart overallchartdata={overallchartdata} /> {/*Componente de la grafica*/}
+                                    <CardBase last_data={lastdata} /> {/*Componente CardBase */}
+                                    <OverallChart overallchartdata={lastdata} /> {/*Componente de la grafica*/}
                                 </>
                                 :
-                                <p style={{color: "white"}}>Cargando datos...</p>
+                                <>
+                                    <p style={{color: "white"}}>Cargando datos...</p>
+                                    <p style={{color: "white"}}>Puede que no haya datos disponibles...</p>
+                                </>
                         }
                     </TabPanel>
                     <TabPanel> {/*Pestaña 2*/}
@@ -82,7 +93,10 @@ const Dasboard = () => {
                         dataInitial ?
                         <Charts data={data} />
                         :
-                        <p style={{color: "white"}}>Cargando datos...</p>
+                        <>
+                            <p style={{color: "white"}}>Cargando datos...</p>
+                            <p style={{color: "white"}}>Puede que no haya datos disponibles...</p>
+                        </>
                     }
                     </TabPanel>
                     <TabPanel> {/*Pestaña 3 */}
