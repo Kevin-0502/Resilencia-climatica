@@ -14,7 +14,8 @@ app.set('json spaces', 2);
 
 //mongodb connect
 //const uri = "mongodb+srv://dbUser:dbUser@cluster0.juemb4w.mongodb.net/?retryWrites=true&w=majority";
-const uri = "mongodb://root:root@localhost:27017/?authMechanism=DEFAULT";
+const uri = "mongodb://150.136.198.213:27017";
+//cambiar la ip del local host por que el docker no reconoce el localhost como una ip alcanzable
 
 mongoose.Promise = global.Promise;
 mongoose.connect(uri).then(db => console.log('conexion exitosa')).catch(err => console.log('error: ', err));
