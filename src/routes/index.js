@@ -15,6 +15,8 @@ router.get('/api/list', dataController.list);
 
 router.get('/api/list/:id', dataController.show);
 
+router.post('/api/list/date', dataController.Date_show);
+
 router.post('/api/list', dataController.add);
 
 router.put('/api/list/:id', dataController.update);
