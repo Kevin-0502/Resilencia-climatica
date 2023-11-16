@@ -7,7 +7,7 @@ exports.list = async (req, res) => {
         res.json(data);
     } catch (error) {
         console.log(error);
-        res.send(error);
+        res.status(200).send(error);
         next();
     }
 };
@@ -42,7 +42,9 @@ exports.Date_show = async (req, res) => {
                 var date1 = new Date(initial_date);
                 var date2 = new Date(final_date);
                 
-                return res.status(200).send({ initial: date1, final: date2 });
+                const data = await Data.find({createdAt: { $gt: date1, $lt: date2 }});
+                return res.status(200).send({  initial: date1, final: date2, data:data});
+                
             }
         } else {
             return res.status(500).send({ message: "Error, las fechas tienen que tener el formato: MM/DD/YYYY, alguna fecha puede estar mala." });
