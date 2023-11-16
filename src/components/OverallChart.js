@@ -1,10 +1,7 @@
-import React, {useEffect,useState} from 'react'
-import { Card, Title, Subtitle,Badge } from "@tremor/react";
+import React from 'react'
+import { Card, Title, Subtitle } from "@tremor/react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import url_data from "./Data"
-import {
-  StatusOnlineIcon
-} from "@heroicons/react/outline";
+
 
 const Chart = ({overallchartdata}) => {
     return(

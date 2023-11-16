@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { Grid, Col, Card, Text, Metric, Title, Flex, Badge, Legend, CategoryBar, ProgressBar } from "@tremor/react";
 import thermometer from "../assests/img/thermometer.png";
 import humidity_img from "../assests/img/Humity.png";
@@ -8,7 +8,6 @@ import ligh_bulb from "../assests/img/light-bulb.png";
 import {
     StatusOnlineIcon
   } from "@heroicons/react/outline";
-import url_data from "./Data"
 
 function convertCelsiusToFahrenheit (celsius) {
   return ((celsius * 1.8) + 32).toFixed(2);

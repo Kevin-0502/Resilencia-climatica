@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { Card, Title, TabGroup, TabList, Tab, TabPanels, TabPanel, Flex,Badge } from "@tremor/react"
 import img_temp from "../assests/img/thermometer.png";
 import {
@@ -14,7 +14,6 @@ import {
 import {
   StatusOnlineIcon
 } from "@heroicons/react/outline";
-import url_data from "./Data"
 
 const dataFormatterTemperatureC= (number) => `${Intl.NumberFormat("us").format(number).toString()}°C`
 const dataFormatterTemperatureF= (number) => `${Intl.NumberFormat("us").format(number).toString()}°F`
@@ -38,7 +37,8 @@ const TemperatureChart = ({data}) => {
   const temperaturesF = data.map(data => parseInt(convertCelsiusToFahrenheit(data.temperatura)))
   const maxTemperatureF = Math.max(...temperaturesF)+10;
   const minTemperatureF = 0;
-
+  
+    
 
 
   return(
