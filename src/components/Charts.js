@@ -1,83 +1,101 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Col, DateRangePicker, Card, Button, Flex, DateRangePickerValue } from "@tremor/react";
+import { Grid, Col, DateRangePicker, Card, Button, Flex, Title } from "@tremor/react";
 import TemperatureChart from "./TemperatureChart";
 import HumidityChart from "./HumidityChart";
 import CO2Chart from "./CO2Chart";
 import VOCChart from "./VOCChart";
 import IntensityChart from "./IntensityChart";
-import url from "./Data";
+import url_data from "./Data";
 
 const ChartsData = () => {
 
-  var url_data = url + '/date'
+  var  url= url_data + '/date'
+  var date1 = getLastWeeksDate();
+  var date2 = new Date();
+  var dates = {
+    initial_date: date1,
+    final_date: date2
+  }
   const [data, setData] = useState([])
   const [dataInitial, setDataInitial] = useState(false);
-  const [fechaInit, setFechaInit] = useState(new Date());
-  const [fechaFinal, setFechaFinal] = useState(new Date());
-
+  const [fecha, setFechaInit] = useState(new Date());
 
   async function fetch_data(options) {
-    await fetch(url_data, configRequesOptions(options)).then(response => (response).json()).then(resjson => {
-      console.log(resjson);
-      try {
+    await fetch(url, configRequesOptions(options)).then(response => (response).json()).then(resjson => {
+    console.log(resjson);
+    try {
         if ((resjson.data).length > 0) {
-          setData(resjson.data)
-          setDataInitial(true)
+        setData(resjson.data)
+        setDataInitial(true)
         }
-      } catch (error) {
+        else{
+        setDataInitial(false);
+        }
+    } catch (error) {
         console.log(error);
-      }
+        setDataInitial(false);
+    }
     });
-  };
-
-  function configRequesOptions(data) {
+};
+function configRequesOptions(data) {
     return {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
     }
-  };
+};
 
-  useEffect(() => {
-    var date1 = new Date('11/11/2023');
-    var date2 = new Date();
-    var dates = {
-      initial_date: date1,
-      final_date: date2
-    }
-    fetch_data(dates);
-  }, []);
+function getLastWeeksDate() {
+  const now = new Date();
+  return new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() -5,
+  );
+}
+
+useEffect(() => {
+  fetch_data(dates);
+}, []);
 
   return (
     <>
-      <Card><Flex justifyContent="around" >
-        <DateRangePicker enableSelect={false} value={fechaInit} onValueChange={fecha1 => setFechaInit(fecha1)} />
-        <DateRangePicker enableSelect={false} value={fechaFinal} onValueChange={fecha2 => setFechaFinal(fecha2)} />
+      <Card>
+        <Flex justifyContent="around" >
+        <DateRangePicker enableSelect={false} value={fecha} onValueChange={fecha1 => setFechaInit(fecha1)} />
         <Button color="sky" onClick={() => {
-          alert("boton click");
           var dates = {
-            initial_date: fechaInit.from,
-            final_date: fechaFinal.from
+            initial_date: fecha.from,
+            final_date: fecha.to
           };
           fetch_data(dates);
         }}>Filtrar</Button>
-      </Flex></Card>
-      <Grid numItems={1} numItemsSm={2} numItemsLg={3} className="gap-2">
-        {/*Card temperatura */}
-        <Col numColSpan={1} numColSpanLg={2}>
-          <TemperatureChart data={data} /> {/*componente graficas temperaturas */}
-        </Col>
-
-        {/*Card humedad */}
-        <HumidityChart data={data} />
-        {/*Card CO2*/}
-        <Col>
-          <CO2Chart data={data} />
-        </Col>
-        <VOCChart data={data} />
-        <IntensityChart data={data} />
-      </Grid>
-    </>
+        </Flex>
+      </Card>
+      {dataInitial? <>
+        <Grid numItems={1} numItemsSm={2} numItemsLg={3} className="gap-2">
+          {/*Card temperatura */}
+          <Col numColSpan={1} numColSpanLg={2}>
+            <TemperatureChart data={data} /> {/*componente graficas temperaturas */}
+          </Col>
+          {/*Card humedad */}
+          <HumidityChart data={data} />
+          {/*Card CO2*/}
+          <Col>
+            <CO2Chart data={data} />
+          </Col>
+          <VOCChart data={data} />
+          <IntensityChart data={data} />
+        </Grid>
+        </>
+      :
+      <Card>
+        <Flex>
+          <Title>Seleccione un rango de fecha...</Title>
+        </Flex>
+      </Card>
+      }
+      </>
   )
 }
 

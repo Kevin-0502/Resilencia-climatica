@@ -13,34 +13,22 @@ const Dasboard = () => {
 
     const [selectedView, setSelectedView] = useState(1)
     const [lastdata, setLastdata] = useState([])
-    const [data, setData] = useState([])
-    const [dataInitial, setDataInitial] = useState(false);
     const [dataInitialLast, setDataInitialLast] = useState(false);
     var timerselected = 300000
 
     async function fetch_last_data() {
         await fetch(url_data).then(response => response.json()).then(resjson => {
             if(resjson.length>0){
-                setLastdata(resjson[resjson.length - 1])
-                setDataInitialLast(true)
+                setLastdata(resjson[resjson.length - 1]);
+                setDataInitialLast(true);
             }    
             });
     }
-    async function fetch_data() {
-        fetch(url_data).then(response => response.json()).then(resjson => {
-            if(resjson.length>0){
-                setData(resjson)
-                setDataInitial(true)
-            }
-        });
-    };
-
+    
     useEffect(() => {
-        fetch_last_data()
-        fetch_data()
+        fetch_last_data();
         const interval = setInterval(() => {
             fetch_last_data()
-            fetch_data()
             console.log('Se volvio a hacer la peticion de datos')
         }, timerselected);
         return () => clearInterval(interval);
@@ -90,8 +78,8 @@ const Dasboard = () => {
                     </TabPanel>
                     <TabPanel> {/*Pestaña 2*/}
                     {
-                        dataInitial ?
-                        <Charts data={data} />
+                        dataInitialLast ?
+                        <Charts/>
                         :
                         <>
                             <p style={{color: "white"}}>Cargando datos...</p>
