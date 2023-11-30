@@ -42,7 +42,7 @@ exports.Date_show_top25 = async (req, res) => {
                 var date1 = new Date(initial_date);
                 var date2 = new Date(final_date);
                 
-                const data = await Data.find({createdAt: { $gt: date1, $lt: date2 }}).limit(25);
+                const data = await Data.find({createdAt: { $gt: date1, $lt: date2 }}).sort({createdAt: -1}).limit(25);
                 return res.status(200).send({  initial: date1, final: date2, data:data});
                 
             }
