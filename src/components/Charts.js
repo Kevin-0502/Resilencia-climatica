@@ -11,19 +11,13 @@ import DataToExcel from "./DataToExcel";
 const ChartsData = () => {
 
   var url = url_data + '/date'
-  var date1 = getLastWeeksDate();
-  var date2 = new Date();
-  var dates = {
-    initial_date: date1,
-    final_date: date2
-  }
+  var url_initial = url_data + '/top_25'
   const [data, setData] = useState([])
   const [dataInitial, setDataInitial] = useState(false);
   const [fecha, setFechaInit] = useState(new Date());
 
   async function fetch_data(options) {
     await fetch(url, configRequesOptions(options)).then(response => (response).json()).then(resjson => {
-      console.log(resjson);
       try {
         if ((resjson.data).length > 0) {
           setData(resjson.data)
@@ -45,25 +39,40 @@ const ChartsData = () => {
       body: JSON.stringify(data)
     }
   };
-
-  function getLastWeeksDate() {
+  async function fetch_data_initial() {
+    await fetch(url_initial).then(response => (response).json()).then(resjson => {
+      try {
+        if (resjson.length > 0) {
+          setData(resjson)
+          setDataInitial(true)
+        }
+        else {
+          setDataInitial(false);
+        }
+      } catch (error) {
+        console.log(error);
+        setDataInitial(false);
+      }
+    });
+  }
+  /*function getLastWeeksDate() {
     const now = new Date();
     return new Date(
       now.getFullYear(),
       now.getMonth(),
       now.getDate() - 1,
     );
-  }
+  }*/
 
   useEffect(() => {
-    fetch_data(dates);
+    fetch_data_initial();
   }, []);
 
   return (
     <>
       <Card>
         <Flex justifyContent="space-between" alignItems="center">
-          <DateRangePicker enableSelect={false} value={fecha} onValueChange={fecha1 => setFechaInit(fecha1)} />
+          <DateRangePicker enableSelect={false} value={fecha} onValueChange={fecha => setFechaInit(fecha)} />
           <Flex justifyContent="space-between" alignItems="center" style={{marginLeft: "10px"}}>
           <Button color="sky" onClick={() => {
             var dates = {
