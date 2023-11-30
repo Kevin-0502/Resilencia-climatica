@@ -27,29 +27,14 @@ exports.show = async (req, res, next) => {
     }
 };
 
-exports.Date_show_top25 = async (req, res) => {
-    const { initial_date, final_date } = req.body;
-    if (!initial_date || !final_date) {
-        return res.status(500).send({ message: "Error, se debe introducir fecha de inicio y fin." });
-    } else {
-        var isDateOK1 = isDateValid(initial_date);
-        var isDateOK2 = isDateValid(final_date);
-
-        if (isDateOK1 && isDateOK2) {
-            if (Date.parse(initial_date) >= Date.parse(final_date)) {
-                return res.status(500).send({ message: "Error, la fecha de inicio tiene que ser mayor a la fecha final." });
-            } else {
-                var date1 = new Date(initial_date);
-                var date2 = new Date(final_date);
-                
-                const data = await Data.find({createdAt: { $gt: date1, $lt: date2 }}).sort({createdAt: -1}).limit(25);
-                return res.status(200).send({  initial: date1, final: date2, data:data});
-                
-            }
-        } else {
-            return res.status(500).send({ message: "Error, las fechas tienen que tener el formato: MM/DD/YYYY, alguna fecha puede estar mala." });
-        }
+exports.top25 = async (req, res) => {      
+    try{
+        const data = await Data.find({}).sort({createdAt: -1}).limit(25);
+        return res.status(200).json({data});
+    }catch{
+        return res.status(500).send({ message: "Error." });
     }
+    
 };
 
 exports.Date_show = async (req, res) => {

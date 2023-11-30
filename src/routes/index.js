@@ -13,11 +13,11 @@ router.get('/api/test', (req, res) => {
 
 router.get('/api/list', dataController.list);
 
-router.get('/api/list/:id', dataController.show);
+//router.get('/api/list/:id', dataController.show);
 
 router.post('/api/list/date', dataController.Date_show);
 
-router.post('/api/list/date_25', dataController.Date_show_top25);
+router.get('/api/list/top25', dataController.top25);
 
 router.post('/api/list', dataController.add);
 
