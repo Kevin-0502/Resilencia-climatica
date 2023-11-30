@@ -14,6 +14,7 @@ import {
 import {
   StatusOnlineIcon
 } from "@heroicons/react/outline";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const dataFormatterTemperatureC= (number) => `${Intl.NumberFormat("us").format(number).toString()}°C`
 const dataFormatterTemperatureF= (number) => `${Intl.NumberFormat("us").format(number).toString()}°F`
@@ -45,8 +46,8 @@ const TemperatureChart = ({data}) => {
     <Card decoration="top" decorationColor="red">
     <TabGroup /*onLoad={addFahrenheit(overallchartdata)}*/> 
         <TabList>
-          <Tab style={{ fontWeight: 'bold', fontSize: 15 }}>temperatura (°C)</Tab>
-          <Tab style={{ fontWeight: 'bold', fontSize: 15 }}>temperatura (°F)</Tab>
+          <Tab style={{ fontWeight: 'bold', fontSize: 15 }}><i className="bi bi-thermometer-sun"></i> temperatura (°C)</Tab>
+          <Tab style={{ fontWeight: 'bold', fontSize: 15 }}><i className="bi bi-thermometer-sun"></i> temperatura (°F)</Tab>
         </TabList>
         <TabPanels>
         {/*Grafica con °C */}

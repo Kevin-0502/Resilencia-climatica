@@ -7,24 +7,24 @@ import CardBase from "./CardBase";
 import Charts from "./Charts";
 import Contact from "./Contact";
 import url_data from "./Data";
-
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Dasboard = () => {
-
+    const url = url_data + "/last";
     const [selectedView, setSelectedView] = useState(1)
     const [lastdata, setLastdata] = useState([])
     const [dataInitialLast, setDataInitialLast] = useState(false);
     var timerselected = 300000
 
     async function fetch_last_data() {
-        await fetch(url_data).then(response => response.json()).then(resjson => {
-            if(resjson.length>0){
-                setLastdata(resjson[resjson.length - 1]);
+        await fetch(url).then(response => response.json()).then(resjson => {
+            if ((resjson.data).length > 0) {
+                setLastdata(resjson.data[0]);
                 setDataInitialLast(true);
-            }    
-            });
+            }
+        });
     }
-    
+
     useEffect(() => {
         fetch_last_data();
         const interval = setInterval(() => {
@@ -40,9 +40,9 @@ const Dasboard = () => {
             <TabGroup>
                 <TabList defaultValue={selectedView} handleSelect={value => setSelectedView(value)} style={{ backgroundColor: '#545454', paddingLeft: 10, paddingRight: 10, borderRadius: 10 }}>
                     <Flex alignItems="center" justifyContent="start">
-                        <Tab value={1} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 15 }}>Home</Tab>
-                        <Tab value={2} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 15 }}>Gráficas</Tab>
-                        <Tab value={3} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 15 }}>Contacto</Tab>
+                        <Tab value={1} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 15 }}><i className="bi bi-house-door-fill"></i> Home</Tab>
+                        <Tab value={2} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 15 }}><i className="bi bi-bar-chart-fill"></i> Gráficas</Tab>
+                        <Tab value={3} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 15 }}><i className="bi bi-person-circle"></i> Contacto</Tab>
                     </Flex>
                     <img justifyContent="end"
                         alt="logo_UDB"
@@ -71,21 +71,21 @@ const Dasboard = () => {
                                 </>
                                 :
                                 <>
-                                    <p style={{color: "white"}}>Cargando datos...</p>
-                                    <p style={{color: "white"}}>Puede que no haya datos disponibles...</p>
+                                    <p style={{ color: "white" }}>Cargando datos...</p>
+                                    <p style={{ color: "white" }}>Puede que no haya datos disponibles...</p>
                                 </>
                         }
                     </TabPanel>
                     <TabPanel> {/*Pestaña 2*/}
-                    {
-                        dataInitialLast ?
-                        <Charts/>
-                        :
-                        <>
-                            <p style={{color: "white"}}>Cargando datos...</p>
-                            <p style={{color: "white"}}>Puede que no haya datos disponibles...</p>
-                        </>
-                    }
+                        {
+                            dataInitialLast ?
+                                <Charts />
+                                :
+                                <>
+                                    <p style={{ color: "white" }}>Cargando datos...</p>
+                                    <p style={{ color: "white" }}>Puede que no haya datos disponibles...</p>
+                                </>
+                        }
                     </TabPanel>
                     <TabPanel> {/*Pestaña 3 */}
                         <Contact />

@@ -7,11 +7,12 @@ import VOCChart from "./VOCChart";
 import IntensityChart from "./IntensityChart";
 import url_data from "./Data";
 import DataToExcel from "./DataToExcel";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const ChartsData = () => {
 
   var url = url_data + '/date'
-  var url_initial = url_data + '/top_25'
+  var url_initial = url_data + '/top25'
   const [data, setData] = useState([])
   const [dataInitial, setDataInitial] = useState(false);
   const [fecha, setFechaInit] = useState(new Date());
@@ -42,13 +43,13 @@ const ChartsData = () => {
   async function fetch_data_initial() {
     await fetch(url_initial).then(response => (response).json()).then(resjson => {
       try {
-        if (resjson.length > 0) {
-          setData(resjson)
+        if ((resjson.data).length > 0) {
+          setData((resjson.data).reverse())
           setDataInitial(true)
         }
         else {
           setDataInitial(false);
-        }
+        } 
       } catch (error) {
         console.log(error);
         setDataInitial(false);
@@ -80,7 +81,7 @@ const ChartsData = () => {
               final_date: fecha.to
             };
             fetch_data(dates);
-          }}>Filtrar</Button>
+          }}><i className="bi bi-funnel-fill"></i> Filtrar</Button>
           {/* Exportando la data a excel */}
           <DataToExcel data={data} filename="Datos.xlsx" sheetName="Hoja de datos" />
           </Flex>

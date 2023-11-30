@@ -1,7 +1,7 @@
 import React from 'react';
 import * as XLSX from 'xlsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const DataToExcel = ({ data, filename, sheetName }) => {
     const dataToExcel = () => {
@@ -40,7 +40,7 @@ const DataToExcel = ({ data, filename, sheetName }) => {
 
     return (
         <button className="btn btn-success" style={{marginLeft: "10px"}} onClick={dataToExcel}>
-            Descargar Datos
+            <i className="bi bi-cloud-arrow-down-fill"></i> Descargar Datos
         </button>
     );
 };
