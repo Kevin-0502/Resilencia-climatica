@@ -27,6 +27,15 @@ exports.show = async (req, res, next) => {
     }
 };
 
+exports.last = async (req, res) => {      
+    try{
+        const data = await Data.find({}).sort({createdAt: -1}).limit(1);
+        return res.status(200).json({data});
+    }catch{
+        return res.status(500).send({ message: "Error." });
+    }
+};
+
 exports.top25 = async (req, res) => {      
     try{
         const data = await Data.find({}).sort({createdAt: -1}).limit(25);
@@ -34,7 +43,6 @@ exports.top25 = async (req, res) => {
     }catch{
         return res.status(500).send({ message: "Error." });
     }
-    
 };
 
 exports.Date_show = async (req, res) => {
