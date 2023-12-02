@@ -27,20 +27,20 @@ exports.show = async (req, res, next) => {
     }
 };
 
-exports.last = async (req, res) => {      
-    try{
-        const data = await Data.find({}).sort({createdAt: -1}).limit(1);
-        return res.status(200).json({data});
-    }catch{
+exports.last = async (req, res) => {
+    try {
+        const data = await Data.find({}).sort({ createdAt: -1 }).limit(1);
+        return res.status(200).json({ data });
+    } catch {
         return res.status(500).send({ message: "Error." });
     }
 };
 
-exports.top25 = async (req, res) => {      
-    try{
-        const data = await Data.find({}).sort({createdAt: -1}).limit(25);
-        return res.status(200).json({data});
-    }catch{
+exports.top25 = async (req, res) => {
+    try {
+        const data = await Data.find({}).sort({ createdAt: -1 }).limit(25);
+        return res.status(200).json({ data });
+    } catch {
         return res.status(500).send({ message: "Error." });
     }
 };
@@ -59,10 +59,10 @@ exports.Date_show = async (req, res) => {
             } else {
                 var date1 = new Date(initial_date);
                 var date2 = new Date(final_date);
-                
-                const data = await Data.find({createdAt: { $gt: date1, $lt: date2 }});
-                return res.status(200).send({  initial: date1, final: date2, data:data});
-                
+
+                const data = await Data.find({ createdAt: { $gt: date1, $lt: date2 } });
+                return res.status(200).send({ initial: date1, final: date2, data: data });
+
             }
         } else {
             return res.status(500).send({ message: "Error, las fechas tienen que tener el formato: MM/DD/YYYY, alguna fecha puede estar mala." });
@@ -86,7 +86,15 @@ function isDateValid(dateStr) {
 };
 
 exports.add = async (req, res) => {
-    const data = new Data(req.body);
+    const { temperatura, humedad_relativa, CO2, VOC, intensidad_luminosa } = req.body;
+
+    const data = new Data({
+        temperatura: temperatura || 0,
+        humedad_relativa: humedad_relativa || 0,
+        CO2: CO2 || 0,
+        VOC: VOC || 0,
+        intensidad_luminosa: intensidad_luminosa || 0,
+    })
 
     try {
         await data.save();
