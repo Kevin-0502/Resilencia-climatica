@@ -40,7 +40,7 @@ const DataToExcel = ({ data, filename, sheetName }) => {
 
     return (
         <button className="btn btn-success" style={{marginLeft: "10px"}} onClick={dataToExcel}>
-            <i className="bi bi-cloud-arrow-down-fill"></i> Descargar Datos
+            <i className="bi bi-cloud-arrow-down-fill"></i> Descargar datos
         </button>
     );
 };

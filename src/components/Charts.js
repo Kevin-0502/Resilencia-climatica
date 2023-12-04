@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Col, DateRangePicker, Card, Button, Flex, Title } from "@tremor/react";
+import { Grid, Col, DateRangePicker, DateRangePickerItem, Card, Button, Flex, Title } from "@tremor/react";
 import TemperatureChart from "./TemperatureChart";
 import HumidityChart from "./HumidityChart";
 import CO2Chart from "./CO2Chart";
@@ -7,6 +7,7 @@ import VOCChart from "./VOCChart";
 import IntensityChart from "./IntensityChart";
 import url_data from "./Data";
 import DataToExcel from "./DataToExcel";
+import { subDays } from "date-fns";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const ChartsData = () => {
@@ -15,7 +16,7 @@ const ChartsData = () => {
   var url_initial = url_data + '/top25'
   const [data, setData] = useState([])
   const [dataInitial, setDataInitial] = useState(false);
-  const [fecha, setFechaInit] = useState(new Date());
+  const [fecha, setFechaInit] = useState();
 
   async function fetch_data(options) {
     await fetch(url, configRequesOptions(options)).then(response => (response).json()).then(resjson => {
@@ -33,6 +34,7 @@ const ChartsData = () => {
       }
     });
   };
+
   function configRequesOptions(data) {
     return {
       method: "POST",
@@ -49,7 +51,7 @@ const ChartsData = () => {
         }
         else {
           setDataInitial(false);
-        } 
+        }
       } catch (error) {
         console.log(error);
         setDataInitial(false);
@@ -73,17 +75,46 @@ const ChartsData = () => {
     <>
       <Card>
         <Flex justifyContent="space-between" alignItems="center">
-          <DateRangePicker enableSelect={false} value={fecha} onValueChange={fecha => setFechaInit(fecha)} />
-          <Flex justifyContent="space-between" alignItems="center" style={{marginLeft: "10px"}}>
-          <Button color="sky" onClick={() => {
-            var dates = {
-              initial_date: fecha.from,
-              final_date: fecha.to
-            };
-            fetch_data(dates);
-          }}><i className="bi bi-funnel-fill"></i> Filtrar</Button>
-          {/* Exportando la data a excel */}
-          <DataToExcel data={data} filename="Datos.xlsx" sheetName="Hoja de datos" />
+          <DateRangePicker
+            selectPlaceholder="Select range"
+            value={fecha}
+            onValueChange={fecha => setFechaInit(fecha)}>
+            <DateRangePickerItem
+              key="oneDay"
+              value="oneDay"
+              from={subDays(new Date(), 1)}
+              to={subDays(new Date(), -1)}>
+              1 día
+            </DateRangePickerItem>
+            <DateRangePickerItem
+              key="ThreeDays"
+              value="ThreeDays"
+              from={subDays(new Date(), 3)}
+              to={subDays(new Date(), -1)}
+            >
+              3 días
+            </DateRangePickerItem>
+            <DateRangePickerItem
+              key="OneWeek"
+              value="OneWeek"
+              from={subDays(new Date(), 7)}
+              to={subDays(new Date(), -1)}
+            >
+              1 semana
+            </DateRangePickerItem>
+          </DateRangePicker>
+
+          <Flex justifyContent="space-between" alignItems="center" style={{ marginLeft: "10px" }}>
+            <Button color="sky" onClick={() => {
+              var dates = {
+                initial_date: fecha.from,
+                final_date: fecha.to
+              };
+              fetch_data(dates);
+              console.log(fecha);
+            }}><i className="bi bi-funnel-fill"></i> Filtrar</Button>
+            {/* Exportando la data a excel */}
+            <DataToExcel data={data} filename="Datos.xlsx" sheetName="Hoja de datos" />
           </Flex>
         </Flex>
       </Card>
