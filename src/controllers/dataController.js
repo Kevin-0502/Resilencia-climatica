@@ -65,7 +65,7 @@ exports.Date_show = async (req, res) => {
 
             }
         } else {
-            return res.status(500).send({ message: "Error, las fechas tienen que tener el formato: MM/DD/YYYY, alguna fecha puede estar mala." });
+            return res.status(500).send({ message: "Error, las fechas tienen que tener el formato válido de fecha, alguna fecha puede estar mala." });
         }
     }
 };
