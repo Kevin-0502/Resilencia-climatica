@@ -9,6 +9,8 @@ import url_data from "./Data";
 import DataToExcel from "./DataToExcel";
 import { subDays } from "date-fns";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import BUTTON from "react-bootstrap/Button";
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
 const ChartsData = () => {
 
@@ -17,6 +19,10 @@ const ChartsData = () => {
   const [data, setData] = useState([])
   const [dataInitial, setDataInitial] = useState(false);
   const [fecha, setFechaInit] = useState();
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   async function fetch_data(options) {
     await fetch(url, configRequesOptions(options)).then(response => (response).json()).then(resjson => {
@@ -75,46 +81,64 @@ const ChartsData = () => {
     <>
       <Card>
         <Flex justifyContent="space-between" alignItems="center">
-          <DateRangePicker
-            selectPlaceholder="Select range"
-            value={fecha}
-            onValueChange={fecha => setFechaInit(fecha)}>
-            <DateRangePickerItem
-              key="oneDay"
-              value="oneDay"
-              from={subDays(new Date(), 1)}
-              to={subDays(new Date(), -1)}>
-              1 día
-            </DateRangePickerItem>
-            <DateRangePickerItem
-              key="ThreeDays"
-              value="ThreeDays"
-              from={subDays(new Date(), 3)}
-              to={subDays(new Date(), -1)}
-            >
-              3 días
-            </DateRangePickerItem>
-            <DateRangePickerItem
-              key="OneWeek"
-              value="OneWeek"
-              from={subDays(new Date(), 7)}
-              to={subDays(new Date(), -1)}
-            >
-              1 semana
-            </DateRangePickerItem>
-          </DateRangePicker>
-
           <Flex justifyContent="space-between" alignItems="center" style={{ marginLeft: "10px" }}>
-            <Button color="sky" onClick={() => {
-              var dates = {
-                initial_date: fecha.from,
-                final_date: fecha.to
-              };
-              fetch_data(dates);
-              console.log(fecha);
-            }}><i className="bi bi-funnel-fill"></i> Filtrar</Button>
-            {/* Exportando la data a excel */}
-            <DataToExcel data={data} filename="Datos.xlsx" sheetName="Hoja de datos" />
+            <BUTTON variant="warning" onClick={handleShow}>
+              <i className="bi bi-wrench-adjustable"></i> Opciones
+            </BUTTON>
+
+            <Offcanvas show={show} onHide={handleClose} className="offcanvas text-bg-dark">
+              <Offcanvas.Header closeButton>
+                <Offcanvas.Title><i className="bi bi-wrench-adjustable" style={{ fontSize: "25px", verticalAlign: "middle" }}></i> Menú de opciones</Offcanvas.Title>
+              </Offcanvas.Header>
+              <hr />
+              <Offcanvas.Body>
+                <p><i className="bi bi-1-circle-fill"></i> Filtrar datos</p>
+                <DateRangePicker
+                  selectPlaceholder="Select range"
+                  value={fecha}
+                  onValueChange={fecha => setFechaInit(fecha)}>
+                  <DateRangePickerItem
+                    key="oneDay"
+                    value="oneDay"
+                    from={subDays(new Date(), 1)}
+                    to={subDays(new Date(), -1)}>
+                    1 día
+                  </DateRangePickerItem>
+                  <DateRangePickerItem
+                    key="ThreeDays"
+                    value="ThreeDays"
+                    from={subDays(new Date(), 3)}
+                    to={subDays(new Date(), -1)}
+                  >
+                    3 días
+                  </DateRangePickerItem>
+                  <DateRangePickerItem
+                    key="OneWeek"
+                    value="OneWeek"
+                    from={subDays(new Date(), 7)}
+                    to={subDays(new Date(), -1)}
+                  >
+                    1 semana
+                  </DateRangePickerItem>
+                </DateRangePicker>
+                <Button color="sky" onClick={() => {
+                  try {
+                    var dates = {
+                      initial_date: fecha.from,
+                      final_date: fecha.to
+                    };
+                    fetch_data(dates);
+                  } catch (error) {
+                    alert("Error, primero debe seleccionar un rango de fecha");
+                  }
+                }} style={{ marginTop: 10 }}><i className="bi bi-funnel-fill"></i> Filtrar datos</Button>
+                <br />
+                <br></br>
+                <p><i className="bi bi-2-circle-fill"></i> Descargar datos</p>
+                {/* Exportando la data a excel */}
+                <DataToExcel data={data} filename="Datos.xlsx" sheetName="Hoja de datos" />
+              </Offcanvas.Body>
+            </Offcanvas>
           </Flex>
         </Flex>
       </Card>

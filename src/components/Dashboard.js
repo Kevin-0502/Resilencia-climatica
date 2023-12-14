@@ -7,6 +7,8 @@ import CardBase from "./CardBase";
 import Charts from "./Charts";
 import Contact from "./Contact";
 import url_data from "./Data";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Dasboard = () => {
@@ -38,29 +40,59 @@ const Dasboard = () => {
     return (
         <main className="bg-slate-200 p-6 sm-:p-10" style={{ backgroundColor: '#000', minHeight: '100vh' }}>
             <TabGroup>
-                <TabList defaultValue={selectedView} handleSelect={value => setSelectedView(value)} style={{ backgroundColor: '#545454', paddingLeft: 10, paddingRight: 10, borderRadius: 10 }}>
-                    <Flex alignItems="center" justifyContent="start">
-                        <Tab value={1} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 15 }}><i className="bi bi-house-door-fill"></i> Home</Tab>
-                        <Tab value={2} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 15 }}><i className="bi bi-bar-chart-fill"></i> Gráficas</Tab>
-                        <Tab value={3} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 15 }}><i className="bi bi-person-circle"></i> Contacto</Tab>
-                    </Flex>
-                    <img justifyContent="end"
-                        alt="logo_UDB"
-                        src={logo}
-                        style={{
-                            height: 80,
-                            width: 80
-                        }}
-                    />
-                    <img
-                        alt="logo_IIIE"
-                        src={logo_IIIE}
-                        style={{
-                            height: 70,
-                            width: 70
-                        }}
-                    />
-                </TabList>
+                <nav className="navbar navbar-dark bg-dark shadow-sm">
+                    <div className="container-fluid">
+                        <div className="navbar-brand">
+                            <Flex>
+                                <img justifyContent="end"
+                                    alt="logo_UDB"
+                                    src={logo}
+                                    style={{
+                                        height: 80,
+                                        width: 80
+                                    }}
+                                />
+                                <img
+                                    alt="logo_IIIE"
+                                    src={logo_IIIE}
+                                    style={{
+                                        height: 70,
+                                        width: 70
+                                    }}
+                                />
+                            </Flex>
+                        </div>
+                        <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                            <div className="offcanvas-header">
+                                <h5 className="offcanvas-title" id="offcanvasDarkNavbarLabel"><i className="bi bi-list" style={{ fontSize: "35px", verticalAlign: "middle" }}></i> Menú principal</h5>
+                                <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <hr />
+                            <div className="offcanvas-body">
+                               
+                                    <TabList defaultValue={selectedView} handleSelect={value => setSelectedView(value)}>
+                                        <Flex>
+                                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                            <li class="nav-item">
+                                                <Tab value={1} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 20, marginBottom: 10 }}><i class="bi bi-arrow-right-square" style={{marginRight: 10}}></i><i className="bi bi-house-door-fill"></i> Home</Tab>
+                                            </li>
+                                            <li className="nav-item">
+                                                <Tab value={2} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 20, marginBottom: 10 }}><i class="bi bi-arrow-right-square" style={{marginRight: 10}}></i><i className="bi bi-bar-chart-fill"></i> Gráficas</Tab>
+                                            </li>
+                                            <li className="nav-item">
+                                                <Tab value={3} style={{ fontWeight: 'bold', color: '#D5D5D5', fontSize: 20 }}><i class="bi bi-arrow-right-square" style={{marginRight: 10}}></i><i className="bi bi-person-circle"></i> Contacto</Tab>
+                                            </li>
+                                            </ul>
+                                        </Flex>
+                                    </TabList>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </nav>
                 <TabPanels>
                     <TabPanel> {/*Pestaña 1*/}
                         {
