@@ -131,7 +131,7 @@ useEffect(()=>{
                 }}
               />
             </div>
-            <Metric>{last_data.CO2} PPM</Metric>
+            <Metric>{last_data.CO2} mg</Metric>
             <Badge icon={StatusOnlineIcon}>LIVE</Badge>
           </Flex>
         </Card>

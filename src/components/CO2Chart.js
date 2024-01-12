@@ -15,7 +15,7 @@ import {
   StatusOnlineIcon
 } from "@heroicons/react/outline";
 
-const dataFormatterCO2 = (number) => `${Intl.NumberFormat("us").format(number).toString()}PPM`
+const dataFormatterCO2 = (number) => `${Intl.NumberFormat("us").format(number).toString()}mg`
 
 const CO2Chart = ({data}) => {
 
@@ -27,7 +27,7 @@ const CO2Chart = ({data}) => {
   return(
 <Card decoration="top" decorationColor="stone">
   <Flex>
-  <Title>Gráfica CO2 registrado (PPM)</Title>
+  <Title>Gráfica CO2 registrado (mg)</Title>
     <Badge icon={StatusOnlineIcon}>LIVE</Badge>
     <img 
     alt="co2"

@@ -29,7 +29,7 @@ const Chart = ({overallchartdata}) => {
           <Legend />
           <Bar dataKey="temperatura" fill="red" formatter={(value) => `${value} °C`}/> {/* formato de cada data */}
           <Bar dataKey="humedad_relativa" fill="#3498DB" formatter={(value) => `${value} %`}/>
-          <Bar dataKey="CO2" fill='grey' formatter={(value) => `${value} PPM`}/>
+          <Bar dataKey="CO2" fill='grey' formatter={(value) => `${value} mg`}/>
           <Bar dataKey="VOC" fill='green' formatter={(value) => `${value} mg/m3`}/>
           <Bar dataKey="intensidad_luminosa" fill="#F1C40F" formatter={(value) => `${value} LUX`}/>
         </BarChart>

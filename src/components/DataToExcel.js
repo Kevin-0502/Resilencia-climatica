@@ -29,7 +29,7 @@ const DataToExcel = ({ data, filename, sheetName }) => {
         }));
 
         // Encabezado de la hoja
-        const header = ['Temperaturas (°C)', 'Humedades Relativas (%)', 'CO2 (ppm)', 'VOC (mg/m3)', 'Intensidades Luminosas (LUX)', 'Fecha y hora de publicación'];
+        const header = ['Temperaturas (°C)', 'Humedades Relativas (%)', 'CO2 (mg)', 'VOC (mg/m3)', 'Intensidades Luminosas (LUX)', 'Fecha y hora de publicación'];
 
         // Combinación de datos y el encabezado
         const sheetData = [header, ...Fields.map(item => Object.values(item))];
